@@ -26,8 +26,9 @@
 ```
 
 ####git remote update
+```
 Fetching origin
-
+```
 
 ####git checkout -b release-1.2 origin/develop
 ```
@@ -79,3 +80,58 @@ To https://github.com/vahidhedayati/exttest.git
 ```
 Deleted branch release-1.2 (was 7db39fc).
 ```
+
+
+
+## what have we just done ? 
+
+Well we cloned the project switched to development branch, created a 1.2 branch in there, did our update went back into development merged it and pushed it back to development branch on git 
+
+
+## Now lets update the master branch:
+
+We are going to check out the same develop release-1.2
+
+#### git checkout -b release-1.2 origin/develop
+```
+Branch release-1.2 set up to track remote branch develop from origin.
+Switched to a new branch 'release-1.2'
+```
+
+Check out master 
+#### git checkout master
+```
+Switched to branch 'master'
+```
+
+Now merge them, remember this is the same merge that you did in development branch
+
+#### git merge --no-ff release-1.2
+```
+Merge made by the 'recursive' strategy.
+ application.properties |    1 +
+ 1 file changed, 1 insertion(+)
+```
+
+Tag it on master branch
+####git tag -a 1.2 -m "1.2"
+
+Push back to master 
+####git push origin master
+```
+Username for 'https://github.com': xxxx
+Password for 'https://xxx@github.com': 
+To https://github.com/vahidhedayati/exttest.git
+   3634695..04135bc  master -> master
+```
+
+Delete 1.2 branch
+#### git branch -d release-1.2
+```
+Deleted branch release-1.2 (was 9bc915d).
+```
+
+
+A big thank you to :
+
+[Chris Buckley](http://www.puresrc.com/)
