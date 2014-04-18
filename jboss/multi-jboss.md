@@ -99,7 +99,8 @@ drwxr-xr-x 8 root  root  4096 May 23 10:48 jbs3
 $ chown -R jboss:jboss jbs3
 $ chown -R jboss:jboss jbs0
 $ cd /etc/init.d/
- 
+```
+
 $ ./jboss.new start
 ```
 Starting All JBOSS
