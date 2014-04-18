@@ -1,3 +1,6 @@
+This document explains how you can create multiple instances of jboss on one machine, then update the configuration/init script so that it starts up multiple instances of jboss on one host:
+
+
 Refer to ./docs/examples/binding-manager/sample-bindings.xml
 
 For more information on specifics of [ ports-00 (8080) ]  [ ports-01 (8180) ]  [  ports-02 (8280) ] [ ports-03 (8380) ]
