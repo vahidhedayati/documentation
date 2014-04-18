@@ -132,7 +132,7 @@ Deleted branch release-1.2 (was 9bc915d).
 ```
 
 
-A big thank you to :
+References :
 
 [Chris Buckley](http://www.puresrc.com/)
 
