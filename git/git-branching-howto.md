@@ -135,3 +135,7 @@ Deleted branch release-1.2 (was 9bc915d).
 A big thank you to :
 
 [Chris Buckley](http://www.puresrc.com/)
+
+[Vincent Driessen](http://nvie.com/posts/a-successful-git-branching-model/)
+
+[user167628 who ever you are that earned 5k points by answering one question, :)](http://stackoverflow.com/questions/945654/git-checkout-on-a-remote-branch-does-not-work)
