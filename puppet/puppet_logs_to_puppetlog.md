@@ -1,4 +1,4 @@
-puppet-logging-restarting
+puppet logs to puppet.log
 =========================
 
 this project explains how to seperate out the puppet logs and provides information on how to set up easy aliases to look up puppet restart and its logs
