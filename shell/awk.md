@@ -2,9 +2,12 @@ Awk goodies
 =======================
 
 
-# Pattern matching 
+Pattern matching 
+
 >tail -f /var/log/httpd/access_log|awk -v  pass="191.[0-9]" '{if ($1 ~ pass) print $0 "bad"}'
+
 The awk statement above has a variable of pass looking for 191.[0-9] 191.{patternmatch 0-9} then if the first column contains this variable print the line $0 plus add bad at the end of each line
+
 >191.1xx.2xx.6xx - - [xx/xx/xx:10:30:59 +0100] ......
 
 
