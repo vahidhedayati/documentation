@@ -1,11 +1,11 @@
 ```
 grep -r message *|grep "code"|grep "default"|awk '{
-        if( match($0, /code:.*'[a-z]+'/) ) {
+        if( match($0, /code:.*'[A-z]+'/) ) {
                 str1=substr($0, RSTART, RLENGTH);
                 code=substr(str1, index(str1,":"));
                 code1=substr(code,  index(code,":")+index(code,"'\''"),index(code,",")-(index(code,"'\''")+2));
 
-                if( match(str1, /default:.*'[a-z]+'/) ) {
+                if( match(str1, /default:.*'[A-z]+'/) ) {
                         str2=substr(str1, RSTART, RLENGTH);
                         code2=substr(str2, index(str2,":"));
 
