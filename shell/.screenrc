@@ -1,0 +1,40 @@
+defscrollback 1000
+vbell off
+startup_message off
+multiuser on
+acladd lcp39o
+defflow off
+shelltitle "$ |bash"
+hardstatus alwayslastline
+# hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%3= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+# hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %d/%m/%y %c ]%{W}'
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+hardstatus string '%{gk}[ %{G}%H %{g}][%= %{w}%?%-w%?%{=b kR}(%{W}[%{Y}%n%{W}] %t%?(%u)%?%{=b kR})%{= kw}%?%+w%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %D %d/%M/%Y %c ]%{W}'
+
+caption string "%?%F%{= Bk}%? %C%A %D %d-%m-%Y %{= kB} %t%= %?%F%{= Bk}%:%{= wk}%? %n "
+
+
+
+
+#### OPTIONAL
+
+# allow people to attach to my screen
+multiuser on
+
+# allow the following people full control
+addacl root,aledesma,mymanager,mycoworker1,mycoworker2
+aclchg aledesma +rwx “#?”
+
+# allow everyone readonly access
+aclchg *,!aledesma -rwx “#?”
+
+# setup 10,000 lines of available scrollback — copy/paste
+defscrollback 10000
+
+# fix scrollback in putty
+termcapinfo xterm* ti@:te@
