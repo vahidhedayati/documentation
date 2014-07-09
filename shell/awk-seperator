@@ -1,0 +1,5 @@
+cat test2.sh 
+echo "123 dddd adda 333 554 dd"|awk  'BEGIN {output=0} { for (i = 1; i < NF; i++) {if ($i ~ /[0-9]/) { if ($i > output) { output=$i}; } } }END { print "----"output;}'
+
+sh test2.sh 
+----554
