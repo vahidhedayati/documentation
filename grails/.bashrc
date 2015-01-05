@@ -47,7 +47,7 @@ function gv {
 }
 export gv
 
-genggts {
+function genggts {
         grails integrate-with --eclipse
 }
 export genggts
