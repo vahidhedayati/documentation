@@ -54,19 +54,19 @@ export gv
 #  By default gv will load default grails (2.4.4) and java (1.7)..
 # so run gv:
 # gv
-Exporting JAVA_HOME
+#### -> Exporting JAVA_HOME
 # grails -version
-Grails version: 2.4.4
+#### -> Grails version: 2.4.4
 # gv 2
 # grails -version
-Grails version: 2.4.2
+#### -> Grails version: 2.4.2
 
 ## To change java home on the fly:
 
 # jh 8
 # env|grep JAVA_HOME
-JAVA_HOME=/usr/lib/jvm/jdk1.8.0_11/
+#### -> JAVA_HOME=/usr/lib/jvm/jdk1.8.0_11/
 # jh 7 
 # env|grep JAVA_HOME
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+#### -> JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
 
