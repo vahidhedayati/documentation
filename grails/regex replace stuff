@@ -1,0 +1,20 @@
+GGTS
+replace regex pattern of 
+```
+(.*[A-z])=([A-z].*)	
+
+```
+With
+```
+$1 = $2
+```
+
+			
+replace regex pattern of 
+```
+([A-Za-z])\,([A-Za-z]) 
+```
+With
+```
+$1\, $2
+```
