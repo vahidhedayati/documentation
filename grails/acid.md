@@ -1,4 +1,4 @@
-ACID:
+## ACID:
 
 
 ####Atomicity 
@@ -18,7 +18,9 @@ Ensures that once a transaction is committed, the changes will not be lost and s
 
 
 
-Transactional Annotations
+
+## Transactional Annotations
+
 Using the @Transactional annotation, you can set some transactional behavior and attributes. Propagation defines the transactional behavior for the specified method. This setting determines whether a new transaction should always be created, whether a nested transaction should be created, or even if no transaction should be created at all. Here are the Propagation values you can use in Spring: 
 ```
 REQUIRED: If there’s a transaction, support it; otherwise, create a new one.
