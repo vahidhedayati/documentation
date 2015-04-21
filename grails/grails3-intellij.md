@@ -27,6 +27,10 @@ drwxr-xr-x 6 vahid vahid 4.0K Feb 16 06:16 gradle-2.3
 
 .bashrc
 ```
+function ginst {
+rm -rf  ~/.m2/repository/org/grails/plugins/$1/* && cd ../$1 && grails clean && grails install && cd ../$2 && grails clean && grails run-app
+}
+
 
 function jh {
 	if [[ $1 =~ "/" ]]; then
