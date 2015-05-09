@@ -7,12 +7,13 @@ Creating/fooling your system g3 and g4 commands
 sudo bash
 touch /usr/bin/g3
 touch /usr/bin/g4
-chown $USER:$USER  /usr/bin/g3
-chown $USER:$USER  /usr/bin/g4
+chmod 755 /usr/bin/g3
+chmod 755 /usr/bin/g4
 ```
 
 creating the autocomplete files:
 ```bash
+sudo bash
 cat <<< '
 g4_commands="-debug-fork -verbose -plain-output -refresh-dependencies -reloading -stacktrace -offline -version -non-interactive dev create-app add-proxy alias bootstrap bug-report clean clean-all clear-proxy compile console create-app create-controller create-domain-class create-filters create-integration-test create-multi-project-build create-plugin create-pom create-script create-service create-tag-lib create-unit-test dependency-report doc help init install-app-templates install-dependency install-plugin install-templates integrate-with interactive list-plugin-updates list-plugins migrate-docs package package-plugin plugin-info refresh-dependencies remove-proxy run-app run-script run-war set-grails-version set-proxy set-version shell stats stop-app test-app uninstall-plugin url-mappings-report war wrapper"
 
@@ -44,6 +45,7 @@ _g3()
 
 Creating .bashrc aliases/functions:
 ```bash
+cat <<< '
 function jh {
         if [[ $1 =~ "/" ]]; then
                 export JAVA_HOME=$1;
@@ -91,6 +93,7 @@ function gv {
 
 }
 export gv
+'>> ~/.bashrc
 ```
 
 
