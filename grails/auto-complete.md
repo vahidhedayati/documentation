@@ -1,4 +1,4 @@
-==== New documentation according to video: 
+###New documentation according to video: 
 
 [Can be seen](https://www.youtube.com/watch?v=RXSHApst2cc)
 
@@ -94,7 +94,49 @@ export gv
 ```
 
 
-===== Old grails 2 documentation
+Now on a new shell:
+
+```bash
+
+mx1@mx1-DTP:~$ gv 4
+mx1@mx1-DTP:~$ grails -version
+Grails version: 2.4.4
+mx1@mx1-DTP:~$ g4 -version 
+Grails version: 2.4.4
+mx1@mx1-DTP:~$ g4 
+add-proxy                   create-app                  create-service              install-app-templates       -non-interactive            remove-proxy                stats
+alias                       create-controller           create-tag-lib              install-dependency          -offline                    run-app                     stop-app
+bootstrap                   create-domain-class         create-unit-test            install-plugin              package                     run-script                  test-app
+bug-report                  create-filters              -debug-fork                 install-templates           package-plugin              run-war                     uninstall-plugin
+clean                       create-integration-test     dependency-report           integrate-with              -plain-output               set-grails-version          url-mappings-report
+clean-all                   create-multi-project-build  dev                         interactive                 plugin-info                 set-proxy                   -verbose
+clear-proxy                 create-plugin               doc                         list-plugins                -refresh-dependencies       set-version                 -version
+compile                     create-pom                  help                        list-plugin-updates         refresh-dependencies        shell                       war
+console                     create-script               init                        migrate-docs                -reloading                  -stacktrace                 wrapper
+
+
+
+
+
+
+mx1@mx1-DTP:~$ gv 3
+| Grails Version: 3.0.1
+| Groovy Version: 2.4.3
+| JVM Version: 1.7.0_79
+mx1@mx1-DTP:~$ g3 
+bug-report               create-app               create-integration-test  create-taglib            generate-controller      install-templates        plugin-info              stats
+clean                    create-controller        create-interceptor       create-unit-test         gradle                   list-plugins             run-app                  test-app
+compile                  create-domain-class      create-script            dependency-report        help                     open                     schema-export            url-mappings-report
+console                  create-functional-test   create-service           generate-all             install                  package                  shell                    war
+mx1@mx1-DTP:~$ g3 
+
+```
+
+
+
+
+
+###Old grails 2 documentation
 
 In order to add auto complete to grails command line: 
 
