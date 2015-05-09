@@ -1,3 +1,101 @@
+==== New documentation according to video: 
+
+[Can be seen](https://www.youtube.com/watch?v=RXSHApst2cc)
+
+Creating/fooling your system g3 and g4 commands
+```bash
+sudo bash
+touch /usr/bin/g3
+touch /usr/bin/g4
+chown $USER:$USER  /usr/bin/g3
+chown $USER:$USER  /usr/bin/g4
+```
+
+creating the autocomplete files:
+```bash
+cat <<< '
+g4_commands="-debug-fork -verbose -plain-output -refresh-dependencies -reloading -stacktrace -offline -version -non-interactive dev create-app add-proxy alias bootstrap bug-report clean clean-all clear-proxy compile console create-app create-controller create-domain-class create-filters create-integration-test create-multi-project-build create-plugin create-pom create-script create-service create-tag-lib create-unit-test dependency-report doc help init install-app-templates install-dependency install-plugin install-templates integrate-with interactive list-plugin-updates list-plugins migrate-docs package package-plugin plugin-info refresh-dependencies remove-proxy run-app run-script run-war set-grails-version set-proxy set-version shell stats stop-app test-app uninstall-plugin url-mappings-report war wrapper"
+
+have g4 &&
+_g4()
+{
+      local cur=${COMP_WORDS[COMP_CWORD]}
+      COMPREPLY=($(compgen -W "`echo $g4_commands`" -- $cur))
+      command="${COMP_WORDS[1]}"
+}
+[ "${have:-}" ] && complete -F _g4 -o default g4
+'> /etc/bash_completion.d/g4
+
+
+cat <<< '
+g3_commands="create-app create-app bug-report clean compile console create-controller create-domain-class create-functional-test create-integration-test create-interceptor create-script create-service create-taglib create-unit-test dependency-report generate-all generate-controller gradle help install install-templates list-plugins open package plugin-info run-app schema-export shell stats test-app url-mappings-report war"
+
+
+have g3 &&
+_g3()
+{
+       local cur=${COMP_WORDS[COMP_CWORD]}
+       COMPREPLY=($(compgen -W "`echo $g3_commands`" -- $cur))
+       command="${COMP_WORDS[1]}"
+}
+[ "${have:-}" ] && complete -F _g3 -o default g3
+'> /etc/bash_completion.d/g3
+```
+
+Creating .bashrc aliases/functions:
+```bash
+function jh {
+        if [[ $1 =~ "/" ]]; then
+                export JAVA_HOME=$1;
+        else
+                if [ "$1"  == "7" ] || [ "$1" == "" ];  then
+                        export JAVA_HOME=/usr/lib/jvm/jdk7/
+                elif  [ "$1"  == "8" ]; then
+                        export JAVA_HOME=/usr/lib/jvm/jdk8/
+                fi
+        fi
+}
+export jh
+
+function gv {
+         grails_root="$HOME/grails3/"
+         if [[ $1 =~ "/" ]]; then
+                export GRAILS_HOME=$1;
+        else
+                 if [ "$1"  == "4" ] || [ "$1" == "" ];  then
+                        export GRAILS_HOME=$grails_root/grails-2.4.4
+                        function g4 () {
+                                $GRAILS_HOME/bin/grails  "$@";
+                        }
+                        alias grails=g4
+                elif  [ "$1"  == "3" ]; then
+                        export GRAILS_HOME=$grails_root/grails-3.0.1
+                        alias gradle=$grails_root/gradle-2.3/bin/gradle
+                        function g3 () {
+                                $GRAILS_HOME/bin/grails  "$@";
+                        }
+                        alias grails=g3
+                elif  [ "$1"  == "2" ]; then
+                        export GRAILS_HOME=$grails_root/grails-2.4.2
+                fi
+
+        fi
+        #alias grails=$GRAILS_HOME/bin/grails
+        if env|grep -q JAVA_HOME; then
+                #       echo "JAVA_SET"
+                echo -n
+        else
+                echo "Exporting JAVA_HOME"
+                jh
+        fi
+
+}
+export gv
+```
+
+
+===== Old grails 2 documentation
+
 In order to add auto complete to grails command line: 
 
 Try the following:
