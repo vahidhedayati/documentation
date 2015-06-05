@@ -11,13 +11,9 @@ it will become
 if (a = b) {
 ```
 
-Use this:
+Use this where you search and replace (tick regex):
 ```
 (.*[A-z0-9])=([A-z0-9].*)
-
-```
-With
-```
 $1 = $2
 ```
 
@@ -29,7 +25,7 @@ it will become
 ```
 if (something == 'something') {
 ```
-Use this
+Use this where you search and replace (tick regex):
 
 ```
 (.*[A-z'])==([A-z'].*)
@@ -50,12 +46,9 @@ It will become
 service.Caller(a, b, c)
 ```
 
-Use this:
+Use this where you search and replace (tick regex):
 
 ```
 ([A-Za-z])\,([A-Za-z]) 
-```
-With
-```
 $1\, $2
 ```
