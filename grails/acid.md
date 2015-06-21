@@ -1,3 +1,13 @@
+##References:
+
+[Grails transactions youtube Burt Beckwith](https://www.youtube.com/watch?v=JNey9T--rLE)
+
+[SavingRecord withTransactions and merge ](https://github.com/vahidhedayati/documentation/blob/master/grails/saveRecord.md)
+
+[testing-transactions](https://github.com/vahidhedayati/test-transactions)
+
+
+
 ## ACID:
 
 
