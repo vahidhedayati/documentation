@@ -136,7 +136,32 @@ sudo bash
 setup_gv
 exit
 gv 4
-## this will export out grails 2.4.4 and give auto complete for grails 2
+## this will export out grails 2.4.4 and give auto complete for grails 2, simply type in grails and press tab tab 
 gv 3
-## this will export out grails 3.0.1 and give auto complete for grails 3
+## this will export out grails 3.0.1 and give auto complete for grails 3, simply type in grails and press tab tab 
 ```
+
+so here is it running on my machine:
+
+```
+mx1@mx1-DTP:~/test3$ gv 3
+mx1@mx1-DTP:~/test3$ grails 
+bug-report               console                  create-domain-class      create-interceptor       create-taglib            generate-all             help                     list-plugins             plugin-info              shell                    url-mappings-report      
+clean                    create-app               create-functional-test   create-script            create-unit-test         generate-controller      install                  open                     run-app                  stats                    war                      
+compile                  create-controller        create-integration-test  create-service           dependency-report        gradle                   install-templates        package                  schema-export            test-app                 
+mx1@mx1-DTP:~/test3$ grails ^C
+```
+
+````
+mx1@mx1-DTP:~/test3$ gv 4
+mx1@mx1-DTP:~/test3$ grails 
+add-proxy                   clear-proxy                 create-filters              create-service              doc                         install-templates           -non-interactive            -refresh-dependencies       run-war                     stats                       -version
+alias                       compile                     create-integration-test     create-tag-lib              help                        integrate-with              -offline                    refresh-dependencies        set-grails-version          stop-app                    war
+bootstrap                   console                     create-multi-project-build  create-unit-test            init                        interactive                 package                     -reloading                  set-proxy                   test-app                    wrapper
+bug-report                  create-app                  create-plugin               -debug-fork                 install-app-templates       list-plugins                package-plugin              remove-proxy                set-version                 uninstall-plugin            
+clean                       create-controller           create-pom                  dependency-report           install-dependency          list-plugin-updates         -plain-output               run-app                     shell                       url-mappings-report         
+clean-all                   create-domain-class         create-script               dev                         install-plugin              migrate-docs                plugin-info                 run-script                  -stacktrace                 -verbose                    
+mx1@mx1-DTP:~/test3$ grails 
+
+
+````
