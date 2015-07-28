@@ -1,3 +1,4 @@
+[Also check autocomplete_UPDATED](https://github.com/vahidhedayati/documentation/blob/master/grails/autocomplete_UPDATED.md) This contains the latest in all these aliases.
 
 
 Ctrl + Alt + O (Code → Optimize Imports...) 
