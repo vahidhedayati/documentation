@@ -67,3 +67,7 @@ export genggts
 # env|grep JAVA_HOME
 #### -> JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
 
+function ginst {
+        gv 3 && rm -rf  ~/.m2/repository/org/grails/plugins/$1/* && cd ../$1 && grails clean && grails install && cd ../$2 && grails clean && grails run-app
+}
+#  grep -r config\.[a-z] *|grep -v "config.wschat"|awk -F"config." '{print "wchat."$2}'|awk -F" " '{print $1}'|egrep -v "wschat.$|roperty\)"|awk -F")" '{print $1}'
