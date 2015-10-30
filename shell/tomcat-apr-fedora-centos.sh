@@ -2,6 +2,7 @@
 ########
 # ---------- tomcat-apr.sh tomcat
 # Bash script to download latest openSSL tomcat7 OracleJDK7
+# Really to be tested on a new install
 # Enable tomcat APR module
 # Configure Basic SSL and enable default ssl certs to work 
 # with a tomcat application running on port 8443.
