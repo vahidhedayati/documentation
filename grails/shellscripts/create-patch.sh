@@ -10,9 +10,10 @@
 # Now with the new updates copy the updated project to new/{projectName}
 
 # define the patch file name defined as file below (you could change this to input params)
-
-existing="/cygdrive/c/workspace/backup/project"
-new="/cygdrive/c/workspace/new/project"
+##This is /cygdrive/c/workspace/latest/project and contains your existing patched code that maybe isnt checked in
+existing="/cygdrive/c/workspace/latest/project"
+##This is /cygdrive/c/workspace/latest/latest/project and contains the new app content that will need to produce patch from
+new="../latest/project"
 file="/cygdrive/c/Users/me/latest-patch.patch"
 
 ## This goes into previous version code
@@ -22,5 +23,11 @@ diff -Naur grails-app $new/grails-app > $file
 # same for src folder
 diff -Naur src $new/src >> $file
 
+## now that we have the patch we need to change all the ${new} paths to b/grails-app
+in=$new out='b' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
+#change all original files found in /cygdrive/c/workspace/latest/project to a/grails-app
+in='--- grails-app' out='--- a/grails-app' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
+#change all original files found in /cygdrive/c/workspace/latest/project/src to a/src
+in='--- src/' out='--- a/src/' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
 
 ## the lates-patch.patch should now be like a patch that would be exported if the code base had been upto the point of existing
