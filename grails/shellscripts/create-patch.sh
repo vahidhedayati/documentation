@@ -1,33 +1,157 @@
 #!/bin/bash
-# used for GGTS/STS Eclipse patch files
-# If you work with patches and have a situation where the current code has not been checked in 
-# but then need to update something else maybe create another patch but face the situation that it's both in one 
-# this script can help separate and generate a new patch for just that bit
+##########################################
+# create-patch.sh will generate an eclipse based patch for a grails based project grails 2(on eclipse / ggts / sts )
+# ready to go and fit in from two destination folders
+# currently generates a patch for Mercurial based SVNs
+#
+# The scenario you have your code base. You have maybe additional patches that are required 
+# for this to work but those patches not checked in so in effect your current work exported
+# as patch would also include those other patches.
+#
+# To generate a specific patch between the point of the other patches vs this content the steps are:
+# step 1 : Export patch including your current work and all the other patches imported as part of it
+# step 2 : Only Import the existing patches that this patch requires. 
+# step 3: Copy the folder / or maybe entire base app folder with those patches to a new destination.
+#       In this example all I needed as the grails-app folder
+#  >> Now using tortoise or however it is clean up the code base back to how it was.
 
-# Before you can use this make a copy of the workspace with the last patch that had not been checked in 
-# to backup/{projectName}
+# step 4:  import step1  -- This should now include your latest changes and all the other patches.
+# step 5: Now copy the entire app folder in this case the grails-app folder which now includes the latest changes into another folder.
+#    I now have:
+#     /tmp/makepatch/grails-app 
+#     /tmp/makepatch/latest/grails-app
+#    The first folder contains step 3 copied folder 
+#    The 2nd folder within makepatch called latest contains grails-app from step5
+# create-patch.sh --grailsapp /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch
+# create-patch.sh --grailsapp --src --verbose --jscss --ddl /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# create-patch.sh --gsjd /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# When defining the above options you are telling this script which folders to make a patch out of between those two folders in my case
+# I copied just grails-app folder so if I do as above
+# create-patch.sh --grailsapp /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# it tells script to find grails-app in the given folder and make a patch which forks perfectly since i know that is only changes 
+# if it was all over the other segments then copy entire folder and include which bits to check
+##########################################
 
-# Now with the new updates copy the updated project to new/{projectName}
+getopt --test > /dev/null
+if [[ $? -ne 4 ]]; then
+	echo "I’m sorry, `getopt --test` failed in this environment."
+	echo "$0 -gsjd/path/to/currentCodeBase /path/to/latestCodeFolder -o /path/to/newPatch.patch"
+	exit 1
+fi
 
-# define the patch file name defined as file below (you could change this to input params)
-##This is /cygdrive/c/workspace/latest/project and contains your existing patched code that maybe isnt checked in
-existing="/cygdrive/c/workspace/latest/project"
-##This is /cygdrive/c/workspace/latest/latest/project and contains the new app content that will need to produce patch from
-new="../latest/project"
-file="/cygdrive/c/Users/me/latest-patch.patch"
+SHORT=gsjdo:v
+LONG=grailsapp,src,jscss,ddl,output:,verbose
+PARSED=`getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@"`
+if [[ $? -ne 0 ]]; then
+    # e.g. $? == 1
+    #  then getopt has complained about wrong arguments to stdout
+    exit 2
+fi
+eval set -- "$PARSED"
+# myscript -gsjd /path/to/currentCodeBase /path/to/latestCodeFolder -o /path/to/newPatch.patch
+while true; do
+    case "$1" in
+        -g|--grailsapp)
+            g=y
+            shift
+            ;;
+        -s|--src)
+            f=y
+            shift
+            ;;
+        -v|--verbose)
+            v=y
+            shift
+            ;;
+        -j|--jscss)
+            j=y
+            shift
+            ;;
+        -d|--ddl)
+            d=y
+            shift
+            ;;
+        -o|--output)
+            outFile="$2"
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "Programming error"
+            exit 3
+            ;;
+    esac
+done
 
-## This goes into previous version code
-cd  $existing
-# runs a diff and generates a patch of difference of old/new in grails-app 
-diff -Naur grails-app $new/grails-app > $file
-# same for src folder
-diff -Naur src $new/src >> $file
+# handle non-option arguments
+if [[ $# -ne 2 ]]; then
+	echo "$0 --grailsapp /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch"
+	echo "$0  --grailsapp --src --verbose --jscss --ddl /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch"
+	echo "$0  --g /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch"
+	echo "$0  --gsjd /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch"
+	echo "When defining the above options you are telling this script which folders to make a patch out of between those two folders"
+    exit 4
+fi
 
-## now that we have the patch we need to change all the ${new} paths to b/grails-app
-in=$new out='b' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
-#change all original files found in /cygdrive/c/workspace/latest/project to a/grails-app
-in='--- grails-app' out='--- a/grails-app' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
-#change all original files found in /cygdrive/c/workspace/latest/project/src to a/src
-in='--- src/' out='--- a/src/' perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $file
+echo "include grails-app: $g, incluse src: $s, include js / css: $j, verbose: $v include ddl: $d ( orig: $1, latest: $2  ) -> out: $outFile";
 
-## the lates-patch.patch should now be like a patch that would be exported if the code base had been upto the point of existing
+function replace() {
+  in=$in1 out=$out1 perl -i -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $outFile;
+}
+function checkFolder() {
+	if [[ $v == "y" ]]; then
+		echo "Checking $pwd/$folder vs $new/$folder";
+	fi
+	diff -Naur $folder $new/$folder >> $outFile;
+}
+
+new=$2;
+cd $1;
+>$outFile;
+
+if [[ $g == "y" ]]; then
+	folder="grails-app";
+	checkFolder;
+fi
+if [[ $s == "y" ]]; then
+	folder="src";
+	checkFolder;
+fi
+if [[ $d == "y" ]]; then
+	folder="scripts/DDL_Latest.txt";
+	checkFolder;
+fi
+if [[ $j == "y" ]]; then
+	folder="web-app/css";
+	checkFolder;
+	folder="web-app/js";
+	checkFolder;
+fi
+in1="diff -Naur";
+out1="diff -r 93a8b78266db";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced diff -Naur with diff -r 93a8b78266db "
+fi
+
+in1="^---"
+out1="^--- a/";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced --- with --- a/ "
+fi
+in1="^+++"
+out1="^+++ b/";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced +++ with +++ b/ "
+fi
+in1=$new
+out1="";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced $new with {nothing} "
+fi
