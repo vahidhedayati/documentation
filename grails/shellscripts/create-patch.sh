@@ -1,6 +1,6 @@
 #!/bin/bash
 ##########################################
-# create-patch.sh will generate an eclipse based patch for a grails based project grails 2(on eclipse / ggts / sts )
+# genpatch.sh will generate an eclipse based patch for a grails based project grails 2(on eclipse / ggts / sts )
 # ready to go and fit in from two destination folders
 # currently generates a patch for Mercurial based SVNs
 #
@@ -22,12 +22,12 @@
 #     /tmp/makepatch/latest/grails-app
 #    The first folder contains step 3 copied folder 
 #    The 2nd folder within makepatch called latest contains grails-app from step5
-# create-patch.sh --grailsapp /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch
-# create-patch.sh --grailsapp --src --verbose --jscss --ddl /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
-# create-patch.sh --gsjd /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# genpatch.sh --grailsapp /tmp/makepatch/ /tmp/makepatch/latest/ -o /path/to/mypatch.patch
+# genpatch.sh --grailsapp --src --verbose --jscss --ddl /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# genpatch.sh --gsjd /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
 # When defining the above options you are telling this script which folders to make a patch out of between those two folders in my case
 # I copied just grails-app folder so if I do as above
-# create-patch.sh --grailsapp /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
+# genpatch.sh --grailsapp /tmp/makepatch/grails-app /tmp/makepatch/latest/grails-app -o /path/to/mypatch.patch
 # it tells script to find grails-app in the given folder and make a patch which forks perfectly since i know that is only changes 
 # if it was all over the other segments then copy entire folder and include which bits to check
 ##########################################
@@ -99,7 +99,8 @@ fi
 echo "include grails-app: $g, incluse src: $s, include js / css: $j, verbose: $v include ddl: $d ( orig: $1, latest: $2  ) -> out: $outFile";
 
 function replace() {
-  in=$in1 out=$out1 perl -i -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $outFile;
+  echo "working on $in1"
+  in=$in1 out=$out1 perl -pi -e 's/\Q$ENV{"in"}/$ENV{"out"}/g' $outFile;
 }
 function checkFolder() {
 	if [[ $v == "y" ]]; then
@@ -107,6 +108,8 @@ function checkFolder() {
 	fi
 	diff -Naur $folder $new/$folder >> $outFile;
 }
+
+revisionKey="93a8b78266db"
 
 new=$2;
 cd $1;
@@ -131,27 +134,27 @@ if [[ $j == "y" ]]; then
 	checkFolder;
 fi
 in1="diff -Naur";
-out1="diff -r 93a8b78266db";
+out1="diff -r $revisionKey";
 replace;
 if [[ $v == "y" ]]; then
-	echo "replaced diff -Naur with diff -r 93a8b78266db "
+	echo "replaced diff -Naur with $revisionKey"
 fi
 
-in1="^---"
-out1="^--- a/";
-replace;
-if [[ $v == "y" ]]; then
-	echo "replaced --- with --- a/ "
-fi
-in1="^+++"
-out1="^+++ b/";
-replace;
-if [[ $v == "y" ]]; then
-	echo "replaced +++ with +++ b/ "
-fi
-in1=$new
+in1="$new"
 out1="";
 replace;
 if [[ $v == "y" ]]; then
-	echo "replaced $new with {nothing} "
+	echo "replaced $in1 with $out1"
+fi
+in1="--- "
+out1="--- a/";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced $in1 with $out1"
+fi
+in1="+++ /"
+out1="+++ b/";
+replace;
+if [[ $v == "y" ]]; then
+	echo "replaced $in1 with $out1"
 fi
